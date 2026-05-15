@@ -1,0 +1,32 @@
+openapi: 3.0.0
+info:
+  title: BillingHub — Billing & Payments system
+  version: 1.0.0
+  description: |
+    MANDATORY: 100% deterministic API for billing, subscriptions, and reconciliation.
+    JWT-only authentication for restricted endpoints.
+paths:
+  /api/subscriptions:
+    post:
+      summary: Create a Stripe-backed subscription.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Created subscription details.
+        '400':
+          description: Validation error (invalid plan or amount).
+  /api/subscriptions/{id}/cancel:
+    post:
+      summary: Schedules cancellation at the end of the current period.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Access continues until period end.
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,64 @@
+"REGLA DE ORO: No modifiques la estructura de los archivos actuales sin permiso. El backend debe sincronizarse con el Frontend (React + TypeScript). Usa @PROMPT.txt y @PROJECT_STRUCTURE.md como verdad absoluta."
+
+# BILLING & PAYMENTS SYSTEM - DETERMINISTIC RULES
+
+## PROJECT OVERVIEW
+Build a complete billing layer with Stripe integration. The system MUST support plan management, prorated billing, failed payment handling, and reconciliation. All logic MUST be deterministic.
+
+## CORE CONSTRAINTS (MANDATORY)
+1. **Authentication**: MUST use JWT only. Sessions are STRICTLY FORBIDDEN.
+2. **Notifications**: REQUIRED to use Email only. No in-app notification center.
+3. **Upgrade/Downgrade**: MUST be performed exclusively via Modals.
+4. **Stripe Cancellation**: MUST use `cancel_at_period_end=True`.
+5. **Account Locking**: MUST be triggered uniquely by the `invoice.payment_failed` webhook event.
+
+## TECH STACK
+- **Backend:** Python (Flask)
+- **Frontend:** React + TypeScript
+- **Database:** PostgreSQL
+- **Payment Provider:** Stripe API (via `stripe-mock` for development)
+
+---
+
+## Expected Interface
+
+| Path | Name | Type | Input | Output | Description |
+|------|------|------|-------|--------|-------------|
+| `backend/models.py` | `User` | Model | `id, email, name, locked` | User Instance | Modelo de usuario con flag de bloqueo por impago. |
+| `backend/models.py` | `Subscription` | Model | `id, stripe_id, status` | Sub Instance | Almacena el estado de Stripe: active, past_due, etc. |
+| `backend/parsing.py` | `calculate_proration` | Function | `sub_id, new_plan_id` | JSON (Estimate) | Source of Truth: Stripe API. Devuelve el prorrata de Stripe. |
+| `backend/parsing.py` | `handle_webhook` | Function | Stripe Event Object | 200 OK / 400 Error | Procesa `invoice.payment_failed` y firma de Stripe. |
+| `backend/jobs.py` | `daily_reconciliation` | Job | None (Cron 02:00 UTC) | ReconciliationLog | Compara DB local vs Stripe API y auto-corrige. |
+| `api/subscriptions` | `create_sub` | POST | `{plan_id: string}` | `{id, status, url}` | Crea cliente y sub en Stripe. Requiere JWT. |
+| `api/admin/billing` | `get_admin_data` | GET | `status, page, limit` | `{customers[], total}` | Lista de clientes con cursor-based pagination. |
+| `frontend/src/types` | `index.ts` | File | None | TypeScript Interfaces | Espejo exacto de los modelos y respuestas del Backend. |
+| `frontend/src/api` | `api.ts` | File | Axios Instance | Exported Methods | Cliente API centralizado con interceptores JWT. |
+| `components/` | `PaymentStatusBadge` | Component | `status: string` | JSX Badge | Indicador visual de estado de pago (active, past_due, locked, etc). |
+
+---
+
+## 2. SUBSCRIPTION MANAGEMENT
+- **Create subscription:** User selects plan → Stripe customer MUST be created → subscription MUST be created.
+- **Upgrade plan:** Mid-cycle upgrade MUST trigger prorated billing calculation.
+- **Downgrade plan:** MUST be applied at next billing cycle (no refund for current cycle).
+- **Cancel subscription:** MUST use `cancel_at_period_end=True`. Access remains until period end.
+
+## 3. PRORATED BILLING
+- MUST calculate unused amount from current plan.
+- MUST credit unused amount toward new plan.
+- MUST charge difference immediately if new plan cost increases.
+
+## 4. FAILED PAYMENT HANDLING
+- MUST detect `invoice.payment_failed` webhook as the unique trigger for locking.
+- REQUIRED grace period of 7 days for automatic retry.
+- After 3 failed attempts: MUST lock user account (`account.locked = true`).
+
+## 5. STRIPE WEBHOOK HANDLING
+Processing MUST:
+- Verify Stripe signature using `STRIPE_WEBHOOK_SECRET`.
+- Ensure idempotent handling.
+- REQUIRED: `invoice.payment_failed`, `invoice.payment_succeeded`, `charge.failed`, `charge.succeeded`.
+
+## 6. DAILY RECONCILIATION JOB
+- MUST run daily at 02:00 UTC.
+- MUST compare local DB with Stripe API and auto-fix discrepancies.

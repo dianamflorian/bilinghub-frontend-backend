@@ -1,0 +1,26 @@
+## Context
+KallistiOS (KOS) for Sega Dreamcast/Naomi hardware requires a new driver for the SH4 Serial Communication Interface (SCI) and a refactor of the DMAC to support asynchronous callbacks.
+
+## Problem Statement
+Implement the SCI driver and refactor the DMAC driver to enable non-blocking serial communication using DMA completion handlers.
+
+## Requirements
+1. **DMAC**: Add callback registration and triggers in `kernel/arch/dreamcast/hardware/dmac.c`.
+2. **SCI**: Implement `sci.c` and `sci.h` for UART/SPI with DMA support.
+3. **Math**: Implement optimized `bit_reverse8` in SH4 assembly (`math.s`).
+
+## Success Criteria
+- Successful compilation.
+- Atomic callback execution in DMAC.
+- Correct SPI/UART SCI configuration.
+
+## Files to Modify
+- `kernel/arch/dreamcast/hardware/dmac.c`
+- `include/dc/math.h`
+- `kernel/arch/dreamcast/math/math.s`
+- `include/kos.h`
+- Symbol export files.
+
+## Files to Create
+- `kernel/arch/dreamcast/hardware/sci.c`
+- `include/dc/sci.h`
