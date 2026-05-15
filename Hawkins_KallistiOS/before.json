@@ -1,6 +1,0 @@
-{
-  "tests": [
-    {"name": "tests/kernel/compile::all_modules", "status": "PASSED"},
-    {"name": "tests/hardware/dmac::callback_logic", "status": "PASSED"}
-  ]
-}
