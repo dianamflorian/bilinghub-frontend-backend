@@ -1,3 +1,6 @@
+> ⚠️ **IMPORTANT NOTICE FOR REVIEWERS:** This project is a full-stack educational showcase for handling subscription features. It does **NOT** collect, process, or store real payment card details, real financial records, or authentic personal user data. All monetary workflows run strictly on **Stripe Sandbox / Test Mode** with dummy credentials and synthetic entities for architectural demonstration purposes only.
+
+
 # Bilinghub
 
 Bilinghub es una aplicación de facturación y suscripciones diseñada para empresas modernas que buscan una solución bilingüe, confiable y escalable para administrar clientes, planes y cobros recurrentes.
@@ -94,3 +97,10 @@ Bilinghub es un proyecto ideal para mostrar tu capacidad de construir soluciones
 ## Keywords
 
 bilinghub, billing, suscripciones, Stripe, SaaS, React, Vite, Flask, JWT, facturación, backend, frontend, full-stack, pago recurrente, administración de suscripciones, CRM, ERP, producto mínimo viable
+
+
+## 🚀 Future Roadmap & TODO (Next 20+ Hours of Work)
+- Upgrade Stripe webhook handlers to process more granular subscription events (upgrades, downgrades, and cancellations).
+- Implement automated integration testing suites for critical authentication and checkout pipelines using Jest or Supertest.
+- Refactor frontend-backend API requests to leverage centralized TypeScript interfaces for cleaner data contracts.
+- Optimize the JWT validation middleware to add token refreshing capabilities and custom route-level permission guards.
