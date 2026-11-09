@@ -1,106 +1,67 @@
-> ⚠️ **IMPORTANT NOTICE FOR REVIEWERS:** This project is a full-stack educational showcase for handling subscription features. It does **NOT** collect, process, or store real payment card details, real financial records, or authentic personal user data. All monetary workflows run strictly on **Stripe Sandbox / Test Mode** with dummy credentials and synthetic entities for architectural demonstration purposes only.
-
+⚠️ **IMPORTANT NOTICE FOR REVIEWERS:** Educational full-stack showcase for subscription features using Stripe Sandbox / Test Mode with dummy credentials.
 
 # Bilinghub
 
-Bilinghub es una aplicación de facturación y suscripciones diseñada para empresas modernas que buscan una solución bilingüe, confiable y escalable para administrar clientes, planes y cobros recurrentes.
+Bilinghub is a bilingual, reliable, and scalable billing and subscription application for modern companies.
 
 ## Descripción
 
-Este proyecto integra un frontend interactivo construido con React + Vite y un backend robusto en Flask. Está diseñado para mostrar una experiencia de producto profesional con autenticación JWT, administración de planes, suscripciones, procesamiento de pagos y panel administrativo.
+An interactive frontend built with React + Vite and a robust Flask backend featuring JWT authentication, plan management, subscriptions, payment processing, and an admin panel.
 
-## Por qué es atractivo para empresas
+## Why it is attractive to companies
 
-- **Solución full-stack**: frontend y backend listos para usar.
-- **Enfoque SaaS**: suscripciones, planes y facturación recurrente.
-- **Pagos por Stripe**: estructura preparada para integrarse con pagos reales.
-- **Seguridad**: autenticación con tokens JWT y manejo de datos sensible en backend.
-- **Escalable**: arquitectura fácil de extender para nuevos endpoints, pasarelas de pago y usuarios.
-- **Diseño profesional**: interfaz moderna y componentes reutilizables.
+- **Full-stack solution**: Ready-to-use frontend and backend.
+- **SaaS approach**: Subscriptions, plans, and recurring billing.
+- **Payments via Stripe**: Structured for real payment integration.
+- **Security**: JWT authentication and backend sensitive data handling.
+- **Scalable**: Easy to extend for new endpoints and payment gateways.
+- **Professional design**: Modern interface with reusable components.
 
-## Características clave
+## Key features
 
-- Inicio de sesión y autenticación JWT
-- Navegación dinámica con React y Vite
-- Gestión de planes y suscripciones
-- Estado de pago y renovaciones
-- Interfaz administrativa para monitorear suscriptores
-- Backend alimentado por Flask y SQLAlchemy
-- Proxy configurado para conectar frontend y backend localmente
-- Arquitectura lista para producción
+- Login and JWT authentication
+- Dynamic navigation with React and Vite
+- Plan and subscription management
+- Payment status and renewals
+- Administrative interface to monitor subscribers
+- Backend powered by Flask and SQLAlchemy
+- Local proxy configuration and production-ready architecture
 
-## Stack tecnológico
+## Technology stack
 
-- React
-- Vite
-- TypeScript
-- Tailwind CSS
-- Flask
-- SQLAlchemy
-- SQLite (base de datos local de desarrollo)
-- JWT para autenticación
-- Stripe (modelo de suscripciones)
+- React, Vite, TypeScript, Tailwind CSS
+- Flask, SQLAlchemy, SQLite (local dev database)
+- JWT authentication & Stripe (subscriptions model)
 
-## Instalación y ejecución
+## Installation and execution
 
 ### Backend
 
-1. Crear y activar un entorno virtual de Python.
-2. Instalar dependencias:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-3. Ejecutar el backend:
-
-```bash
-python wsgi.py
-```
+1. Create and activate a Python virtual environment.
+2. Install dependencies: `python -m pip install -r requirements.txt`
+3. Run the backend: `python wsgi.py`
 
 ### Frontend
 
-1. Ir al directorio `frontend`.
-2. Instalar dependencias:
+1. Go to the `frontend` directory and install dependencies: `npm install`
+2. Run the frontend: `npm run dev` (proxied to `http://localhost:5000`)
 
-```bash
-npm install
-```
+## Use cases
 
-3. Ejecutar el frontend:
+- SaaS billing MVPs, bilingual products, proof of concepts for recurring payments, and React-Flask integration demos.
 
-```bash
-npm run dev
-```
+## Value added
 
-El frontend está configurado para comunicarse con el backend mediante proxy en `http://localhost:5000`.
+An ideal project to showcase complete business-oriented solutions with clear structure and practical documentation.
 
-## Casos de uso
+## Suggested next steps
 
-- Empresas SaaS que necesitan un MVP de facturación
-- Productos bilingües con clientes internacionales
-- Pruebas de concepto de pagos recurrentes
-- Demostraciones de integración entre React y Flask
-
-## Valor agregado
-
-Bilinghub es un proyecto ideal para mostrar tu capacidad de construir soluciones completas con enfoque en negocio. Está orientado a un público profesional, con una estructura clara, documentación práctica y resultados visuales para clientes.
-
-## Próximos pasos sugeridos
-
-- Conectar Stripe en modo real para pagos en producción
-- Cambiar SQLite por PostgreSQL o MySQL
-- Añadir gestión de roles y permisos
-- Implementar tests automatizados y despliegue continuo
-- Localización completa para múltiples idiomas
+- Connect Stripe live mode, migrate SQLite to PostgreSQL/MySQL, add roles/permissions, implement automated tests/CI/CD, and full multi-language localization.
 
 ## Keywords
 
-bilinghub, billing, suscripciones, Stripe, SaaS, React, Vite, Flask, JWT, facturación, backend, frontend, full-stack, pago recurrente, administración de suscripciones, CRM, ERP, producto mínimo viable
-
+bilinghub, billing, subscriptions, Stripe, SaaS, React, Vite, Flask, JWT, invoicing, backend, frontend, full-stack, recurring payment, subscription management, CRM, ERP, minimum viable product
 
 ## 🚀 Future Roadmap & TODO (Next 20+ Hours of Work)
-- Upgrade Stripe webhook handlers to process more granular subscription events (upgrades, downgrades, and cancellations).
-- Implement automated integration testing suites for critical authentication and checkout pipelines using Jest or Supertest.
-- Refactor frontend-backend API requests to leverage centralized TypeScript interfaces for cleaner data contracts.
-- Optimize the JWT validation middleware to add token refreshing capabilities and custom route-level permission guards.
+
+- Upgrade Stripe webhook handlers, implement automated integration testing, refactor API requests with TypeScript interfaces, and optimize JWT middleware.
